@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zedot Tech | For Working Solutions</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Global Loader (Wormhole Miniature) -->
+    <div id="globalLoader" class="global-loader">
+        <div class="loader-wormhole" id="loaderWormhole">
+            <svg viewBox="0 0 400 400" width="100%" height="100%">
+                <defs>
+                    <radialGradient id="loaderStarCore" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#fff" stop-opacity="1" />
+                        <stop offset="60%" stop-color="rgba(255,255,255,0.4)" stop-opacity="0.5" />
+                        <stop offset="100%" stop-color="transparent" stop-opacity="0" />
+                    </radialGradient>
+                    <radialGradient id="loaderGradient1" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#1e90ff" stop-opacity="0.6" />
+                        <stop offset="100%" stop-color="#00b4a0" stop-opacity="0.2" />
+                    </radialGradient>
+                    <radialGradient id="loaderGradient2" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#40e0d0" stop-opacity="0.6" />
+                        <stop offset="100%" stop-color="#8a9bb0" stop-opacity="0" />
+                    </radialGradient>
+                </defs>
+                <!-- Central Star -->
+                <circle cx="200" cy="200" r="10" fill="url(#loaderStarCore)" class="loader-north-star" />
+                <path class="loader-star-ray" d="M 200,160 L 202,198 L 240,200 L 202,202 L 200,240 L 198,202 L 160,200 L 198,198 Z" fill="#fff" opacity="0.8" />
+                
+                <!-- Morphing Layers (Paths injected via JS) -->
+                <path id="loaderPath1" fill="url(#loaderGradient1)">
+                    <animate id="loaderAnim1" attributeName="d" dur="1.5s" repeatCount="indefinite" values="" />
+                </path>
+                <path id="loaderPath2" fill="url(#loaderGradient2)">
+                    <animate id="loaderAnim2" attributeName="d" dur="1.5s" repeatCount="indefinite" values="" />
+                </path>
+            </svg>
+        </div>
+    </div>
+
+    <!-- SPA Glassy Wipe Overlay -->
+    <div class="wipe-overlay" id="wipeOverlay"></div>
+
+    <!-- Cookie Consent UI -->
+    <div class="cookie-modal-overlay" id="cookieModal">
+        <div class="cookie-modal">
+            <h3>We Value Your Privacy</h3>
+            <p>We use cookies to optimize performance, analyze traffic, and ensure you get the best possible experience. Are you cool with that?</p>
+            <div class="cookie-actions">
+                <button class="btn-secondary" id="btnManageCookies">Not Now</button>
+                <button class="btn-primary" id="btnAcceptCookies">Accept All</button>
+            </div>
+        </div>
+    </div>
+    <div class="cookie-bar" id="cookieBar">
+        <span>🍪 Your experience is limited until cookies are accepted.</span>
+        <button id="btnBarAccept">Accept All</button>
+    </div>
+    <div class="cookie-ripple" id="cookieRipple"></div>
+
+    <!-- Fluid Background Canvas -->
+    <canvas id="bgCanvas" class="bg-canvas"></canvas>
+
+    <!-- SPA Persistent Navigation -->
+    <nav class="glass-nav" id="mainNav">
+        <div class="nav-container container">
+            <a href="#home" class="logo-link nav-trigger" id="logoLink">
+                <div class="logo">ZEDOT<span class="logo-dot"></span></div>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#about" class="nav-trigger">About Us</a></li>
+                <li><a href="#services" class="nav-trigger">Services</a></li>
+                <li><a href="#portfolio" class="nav-trigger">Portfolio</a></li>
+                <li><a href="#team" class="nav-trigger">Team</a></li>
+                <li><a href="#research" class="nav-trigger">Research</a></li>
+                <li><a href="#contact" class="nav-trigger btn-pill-cyan">Reach Out</a></li>
+            </ul>
+            <button class="hamburger" id="hamburgerBtn">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- SPA Root Container -->
+    <div class="spa-container">
+        
+        <!-- ================= HOME VIEW ================= -->
+        <section class="spa-view active" id="home">
+            <div class="hero container">
+                <div class="hero-col-text hero-load-anim" id="heroTextBlock">
+                    <h1 id="heroTitle">
+                        <span class="hero-title-word">For</span> 
+                        <span class="hero-title-word">Working</span> 
+                        <span class="hero-title-word">Solutions</span>
+                    </h1>
+                    <p>Scalable technology built for the real world — engineered under pressure, delivered without compromise. We exist at the intersection of grit and innovation, where complex challenges become systems that outlast the problems that created them. Across industries, across stacks — built to last.</p>
+                    <div class="hero-actions">
+                        <a href="#contact" class="btn-pill-cyan nav-trigger">Reach Out</a>
+                        <a href="#services" class="btn-ghost nav-trigger">View Services</a>
+                    </div>
+                </div>
+                
+                <div class="hero-col-visual">
+                    <div class="wormhole-wrapper" id="heroWormhole">
+                        <canvas id="wormholeParticles"></canvas>
+                        <svg viewBox="0 0 800 800" width="100%" height="100%" class="organic-wormhole-svg">
+                            <defs>
+                                <radialGradient id="starCore" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="#fff" stop-opacity="1" />
+                                    <stop offset="40%" stop-color="#40e0d0" stop-opacity="0.8" />
+                                    <stop offset="100%" stop-color="transparent" stop-opacity="0" />
+                                </radialGradient>
+                                <radialGradient id="gradInner" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="#1e90ff" stop-opacity="0.6" />
+                                    <stop offset="100%" stop-color="#1a1f2e" stop-opacity="0.1" />
+                                </radialGradient>
+                                <radialGradient id="gradMid" cx="40%" cy="60%" r="50%">
+                                    <stop offset="0%" stop-color="#00b4a0" stop-opacity="0.4" />
+                                    <stop offset="100%" stop-color="transparent" stop-opacity="0" />
+                                </radialGradient>
+                                <radialGradient id="gradOuter" cx="60%" cy="40%" r="50%">
+                                    <stop offset="0%" stop-color="#8a9bb0" stop-opacity="0.25" />
+                                    <stop offset="100%" stop-color="transparent" stop-opacity="0" />
+                                </radialGradient>
+                            </defs>
+
+                            <!-- Outer Layer (CCW 12s) -->
+                            <g class="spin-ccw">
+                                <path id="heroPathOuter" fill="url(#gradOuter)">
+                                    <animate id="heroAnimOuter" attributeName="d" dur="15s" repeatCount="indefinite" values="" />
+                                </path>
+                            </g>
+                            
+                            <!-- Mid Layer (CW 10s) -->
+                            <g class="spin-cw-fast">
+                                <path id="heroPathMid" fill="url(#gradMid)">
+                                    <animate id="heroAnimMid" attributeName="d" dur="15s" repeatCount="indefinite" values="" />
+                                </path>
+                            </g>
+
+                            <!-- Inner Layer (CW 8s) -->
+                            <g class="spin-cw">
+                                <path id="heroPathInner" fill="url(#gradInner)">
+                                    <animate id="heroAnimInner" attributeName="d" dur="15s" repeatCount="indefinite" values="" />
+                                </path>
+                            </g>
+
+                            <!-- North Star Core -->
+                            <g class="north-star-core">
+                                <circle cx="400" cy="400" r="25" fill="url(#starCore)" />
+                                <path d="M 400,280 L 405,395 L 520,400 L 405,405 L 400,520 L 395,405 L 280,400 L 395,395 Z" fill="#fff" opacity="0.6" />
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Panels Section -->
+            <div class="container section-padding">
+                <div class="summary-panels">
+                    
+                    <div class="summary-panel panel-about fade-in-up">
+                        <div class="summary-content">
+                            <h2>Ethos & Identity</h2>
+                            <p>"Integrity in quality service delivery is not a promise. It is the only standard we know." Built on grit, resilience, and transparency.</p>
+                            <a href="#about" class="btn-secondary nav-trigger">Read Our Manifesto</a>
+                        </div>
+                        <div class="summary-visual about-tex"></div>
+                    </div>
+
+                    <div class="summary-panel panel-services fade-in-up">
+                        <div class="summary-content">
+                            <h2>What We Do</h2>
+                            <p>From custom Software Development to DevOps, AI Integration, and Cybersecurity. We build systems that ship, scale, and secure your future.</p>
+                            <a href="#services" class="btn-secondary nav-trigger">Explore Services</a>
+                        </div>
+                        <div class="summary-visual"></div>
+                    </div>
+
+                    <div class="summary-panel panel-portfolio fade-in-up">
+                        <div class="summary-content">
+                            <h2>Our Work</h2>
+                            <p>Solutions delivered. Trust earned. Explore the platforms, pipelines, and products we've architected for our partners.</p>
+                            <a href="#portfolio" class="btn-secondary nav-trigger">View Portfolio</a>
+                        </div>
+                        <div class="summary-visual portfolio-tex"></div>
+                    </div>
+
+                    <div class="summary-panel panel-team fade-in-up">
+                        <div class="summary-content">
+                            <h2>The Minds</h2>
+                            <p>African-built technology competing on the global stage. Meet the engineers, researchers, and builders behind Zedot.</p>
+                            <a href="#team" class="btn-secondary nav-trigger">Meet the Team</a>
+                        </div>
+                        <div class="summary-visual"></div>
+                    </div>
+
+                    <div class="summary-panel panel-research fade-in-up">
+                        <div class="summary-content">
+                            <h2>Our Research</h2>
+                            <p>We explore so you don't have to. Ongoing R&D into Agentic AI, Zero-Trust Architecture, FinOps, and ML pipelines.</p>
+                            <a href="#research" class="btn-secondary nav-trigger">View Research</a>
+                        </div>
+                        <div class="summary-visual"></div>
+                    </div>
+
+                    <div class="summary-panel panel-contact fade-in-up">
+                        <div class="summary-content">
+                            <h2>Let's Build Something That Works</h2>
+                            <p style="margin-bottom:8px">support@zedot.tech</p>
+                            <p>Lagos, Nigeria</p>
+                        </div>
+                        <div class="summary-visual contact-inline-form">
+                            <form id="landingContactForm" class="inline-form">
+                                <input type="text" placeholder="Name" required>
+                                <input type="email" placeholder="Email" required>
+                                <textarea placeholder="How can we help?" required rows="3"></textarea>
+                                <button type="submit" class="btn-primary">Send It</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= ABOUT VIEW (ETHOS) ================= -->
+        <section class="spa-view" id="about">
+            <div class="container section-padding fade-in-up">
+                <div class="page-header">
+                    <h1>Built on Grit. <br>Delivered with Integrity.</h1>
+                    <div class="page-visual" id="ethosVisual"></div>
+                </div>
+                
+                <p class="manifesto-text">
+                    What Zedot stands for — resilience, quality without compromise, and the unwavering belief that African-built technology can lead on any global stage. Our ethos is not decorative. It is structural. It is the operating system behind every decision we make.
+                </p>
+                
+                <div class="expandable-panels-container">
+                    
+                    <div class="glass-card expandable-card">
+                        <div class="service-header">
+                            <div class="title-with-icon">
+                                <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                                <h3>1. Grit</h3>
+                            </div>
+                            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <p class="text-secondary">Companies like NASA's Jet Propulsion Laboratory and SpaceX have demonstrated that the most mission-critical systems are built by teams who refuse to accept failure as a terminal state. At Zedot, grit means staying in a failing CI/CD pipeline at 2am until it resolves — not because of obligation, but because the work demands it.</p>
+                        <div class="expandable-wrapper">
+                            <div class="expandable-content">
+                                <h4>See this in practice</h4>
+                                <p>Research from McKinsey (2023) shows that engineering teams with high persistence scores deliver projects 34% closer to original scope than those without. We don't exit when it gets hard. We recalibrate and continue.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card expandable-card">
+                        <div class="service-header">
+                            <div class="title-with-icon">
+                                <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                <h3>2. Resilience</h3>
+                            </div>
+                            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <p class="text-secondary">The 2021 Fastly CDN outage took down 85% of the internet for an hour — teams without resilient fallback architectures had no playbook. Resilient engineering means designing for failure before failure designs your crisis response.</p>
+                        <div class="expandable-wrapper">
+                            <div class="expandable-content">
+                                <h4>See this in practice</h4>
+                                <p>We build redundancy, runbooks, and recovery paths into every system we ship. Setbacks are data. We come back with better answers.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card expandable-card">
+                        <div class="service-header">
+                            <div class="title-with-icon">
+                                <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                <h3>3. Security</h3>
+                            </div>
+                            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <p class="text-secondary">The IBM Cost of a Data Breach Report 2024 places the global average breach cost at $4.88 million. The Zedot position: security is never a sprint-six task.</p>
+                        <div class="expandable-wrapper">
+                            <div class="expandable-content">
+                                <h4>See this in practice</h4>
+                                <p>Every pull request, every API endpoint, every data pipeline we touch is evaluated against the OWASP Top 10 and relevant compliance frameworks from day one. Security is a first principle, not a retrofit.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card expandable-card">
+                        <div class="service-header">
+                            <div class="title-with-icon">
+                                <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                                <h3>4. Transparency</h3>
+                            </div>
+                            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <p class="text-secondary">A 2022 PMI Pulse of the Profession report found that 37% of project failures stem from inaccurate status reporting. Zedot enforces honest project communication — sprint reviews, blocker escalations, and delivery forecasts that reflect reality.</p>
+                        <div class="expandable-wrapper">
+                            <div class="expandable-content">
+                                <h4>See this in practice</h4>
+                                <p>Our clients always know where their project stands. No spin. No hidden pivots. No surprises on go-live day.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card expandable-card">
+                        <div class="service-header">
+                            <div class="title-with-icon">
+                                <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="2" x2="12" y2="22"></line><line x1="4" y1="10" x2="4" y2="22"></line><line x1="20" y1="10" x2="20" y2="22"></line><polyline points="12 2 4 10 20 10 12 2"></polyline></svg>
+                                <h3>5. Compliance</h3>
+                            </div>
+                            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <p class="text-secondary">Nigeria's NDPR (2019) and the EU's GDPR impose legal obligations on any organisation handling personal data — including fines of up to 4% of global annual turnover for violations.</p>
+                        <div class="expandable-wrapper">
+                            <div class="expandable-content">
+                                <h4>See this in practice</h4>
+                                <p>We architect systems that are compliant by design — data residency, consent management, audit logging, and access controls are not bolted on. They are baked in.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card expandable-card">
+                        <div class="service-header">
+                            <div class="title-with-icon">
+                                <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                                <h3>6. Customer Centricity</h3>
+                            </div>
+                            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <p class="text-secondary">Nielsen Norman Group research consistently shows that investing in user research before development reduces post-launch rework by up to 50%.</p>
+                        <div class="expandable-wrapper">
+                            <div class="expandable-content">
+                                <h4>See this in practice</h4>
+                                <p>At Zedot, every architecture decision, API design, and UX flow is traced back to the person at the end of the product. We build for humans first. Technical elegance is a means, not the mission.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card expandable-card">
+                        <div class="service-header">
+                            <div class="title-with-icon">
+                                <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg>
+                                <h3>7. Modern & Agile</h3>
+                            </div>
+                            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <p class="text-secondary">The 2024 State of Agile Report found that 71% of organisations using agile practices report faster time-to-market.</p>
+                        <div class="expandable-wrapper">
+                            <div class="expandable-content">
+                                <h4>See this in practice</h4>
+                                <p>We run structured two-week sprints, maintain living backlogs, and adapt to stakeholder feedback without losing momentum or scope integrity. Agile is not a label we wear — it is the cadence we keep.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card expandable-card">
+                        <div class="service-header">
+                            <div class="title-with-icon">
+                                <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                                <h3>8. AI-First Mindset</h3>
+                            </div>
+                            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <p class="text-secondary">GitHub's 2024 Octoverse report found that developers using AI coding assistance ship 55% faster on equivalent tasks. Zedot embeds ML tooling at every SDLC stage.</p>
+                        <div class="expandable-wrapper">
+                            <div class="expandable-content">
+                                <h4>See this in practice</h4>
+                                <p>We believe in the transformative, near-endless possibilities of artificial intelligence — not as a buzzword, but as a daily practice embedded into every engagement.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="ai-sdlc-section fade-in-up">
+                    <h2>The Future We're <br>Building Toward</h2>
+                    <p style="margin-top: 16px; color: var(--text-secondary); max-width: 800px; line-height: 1.8;">
+                        How Zedot integrates AI across the full SDLC. A conviction statement: African-built AI systems will not just participate in the global technology economy — they will help define the standards it runs on.
+                    </p>
+                    <h2 class="closing-mantra text-gradient">"Integrity in quality service delivery is not a promise. It is the only standard we know."</h2>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SERVICES VIEW ================= -->
+        <section class="spa-view" id="services">
+            <div class="container section-padding fade-in-up">
+                <div class="page-header">
+                    <h1>What We Do</h1>
+                    <div class="page-visual" id="servicesVisual"></div>
+                </div>
+                <p style="font-size: 1.1rem; color: var(--text-secondary); max-width: 800px; margin-bottom: 40px;">
+                    We solve real problems with technology that works. Here's how.
+                </p>
+                
+                <div class="expandable-panels-container">
+                    
+                    <div class="glass-card expandable-card">
+                        <div class="service-header">
+                            <div class="title-with-icon">
+                                <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                                <h3>Software Development</h3>
+                            </div>
+                            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <p class="service-hook">"We build things that actually ship."</p>
+                        <p class="text-secondary">Custom web applications, mobile platforms, APIs, and enterprise systems — architected to scale from day one. We don't build prototypes dressed as products.</p>
+                        <div class="expandable-wrapper">
+                            <div class="expandable-content">
+                                <h4>Real-World Scenario</h4>
+                                <p>A Lagos-based logistics startup needed a driver dispatch platform handling 10,000 concurrent sessions. We delivered a horizontally scalable Node.js/React system with WebSocket real-time tracking within 12 sprints. It went live on schedule and handled Black Friday volume without a single incident.</p>
+                                <a href="#contact" class="btn-pill-cyan nav-trigger mt-16">Talk to us about this</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card expandable-card">
+                        <div class="service-header">
+                            <div class="title-with-icon">
+                                <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                                <h3>DevOps & Cloud Infrastructure</h3>
+                            </div>
+                            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <p class="service-hook">"Your systems, always on."</p>
+                        <p class="text-secondary">Infrastructure-as-code, CI/CD pipeline design, container orchestration, and cloud cost governance across AWS, GCP, and Azure.</p>
+                        <div class="expandable-wrapper">
+                            <div class="expandable-content">
+                                <h4>Real-World Scenario</h4>
+                                <p>A fintech client's manual deployment process caused 4-hour release windows every two weeks. We implemented a GitOps workflow with ArgoCD and Kubernetes — reducing deployment time to 8 minutes and enabling daily releases with zero-downtime rollouts.</p>
+                                <a href="#contact" class="btn-pill-cyan nav-trigger mt-16">Talk to us about this</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card expandable-card">
+                        <div class="service-header">
+                            <div class="title-with-icon">
+                                <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                                <h3>AI & Automation</h3>
+                            </div>
+                            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <p class="service-hook">"Work smarter, not harder."</p>
+                        <p class="text-secondary">ML model integration, inference pipeline engineering, intelligent process automation, and AI-assisted SDLC tooling.</p>
+                        <div class="expandable-wrapper">
+                            <div class="expandable-content">
+                                <h4>Real-World Scenario</h4>
+                                <p>A healthcare provider was manually reviewing 3,000 patient intake forms daily. We built an NLP classification pipeline that automated 87% of routing decisions, reducing processing time from 6 hours to 22 minutes — with a human-in-the-loop escalation path for edge cases.</p>
+                                <a href="#contact" class="btn-pill-cyan nav-trigger mt-16">Talk to us about this</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card expandable-card">
+                        <div class="service-header">
+                            <div class="title-with-icon">
+                                <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                <h3>Cybersecurity</h3>
+                            </div>
+                            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <p class="service-hook">"We protect what you've built."</p>
+                        <p class="text-secondary">Threat modelling, penetration testing, SIEM implementation, incident response planning, and compliance framework alignment (NDPR, ISO 27001, SOC 2).</p>
+                        <div class="expandable-wrapper">
+                            <div class="expandable-content">
+                                <h4>Real-World Scenario</h4>
+                                <p>A payment platform discovered a stored XSS vulnerability 48 hours before a major product launch. Zedot's security team conducted an emergency assessment, patched the vulnerability, hardened the CSP headers, and delivered a remediation report — all within the launch window.</p>
+                                <a href="#contact" class="btn-pill-cyan nav-trigger mt-16">Talk to us about this</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card expandable-card">
+                        <div class="service-header">
+                            <div class="title-with-icon">
+                                <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                                <h3>Data Engineering & Analytics</h3>
+                            </div>
+                            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <p class="service-hook">"Your data, finally useful."</p>
+                        <p class="text-secondary">Data warehouse design, ETL/ELT pipeline engineering, BI dashboard delivery, and real-time streaming analytics.</p>
+                        <div class="expandable-wrapper">
+                            <div class="expandable-content">
+                                <h4>Real-World Scenario</h4>
+                                <p>A retail chain had 5 years of transactional data siloed across three legacy systems. We built a unified data lake on Google BigQuery, designed a dbt transformation layer, and delivered a Looker Studio dashboard that gave the CEO a live view of margin by SKU — for the first time in company history.</p>
+                                <a href="#contact" class="btn-pill-cyan nav-trigger mt-16">Talk to us about this</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card expandable-card">
+                        <div class="service-header">
+                            <div class="title-with-icon">
+                                <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 11.08 22 12 12 12 12 22 11.08 22"></polyline><path d="M22 4L12 14.01l-3-3"></path></svg>
+                                <h3>QA & Testing</h3>
+                            </div>
+                            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <p class="service-hook">"If it ships, it works."</p>
+                        <p class="text-secondary">Automated unit, integration, end-to-end, and performance testing — woven into every sprint, not bolted on at the end.</p>
+                        <div class="expandable-wrapper">
+                            <div class="expandable-content">
+                                <h4>Real-World Scenario</h4>
+                                <p>A SaaS product's manual regression suite took 3 days per release cycle. We rebuilt it as a Playwright-based automated suite covering 94% of critical user paths — reducing regression time to 40 minutes and catching a critical checkout bug before it reached production.</p>
+                                <a href="#contact" class="btn-pill-cyan nav-trigger mt-16">Talk to us about this</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card expandable-card">
+                        <div class="service-header">
+                            <div class="title-with-icon">
+                                <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                <h3>Research & Emerging Tech</h3>
+                            </div>
+                            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
+                        <p class="service-hook">"We explore so you don't have to."</p>
+                        <p class="text-secondary">Applied research into AI, cloud-native patterns, cybersecurity threat landscapes, and data architecture trends — translated into actionable recommendations for clients.</p>
+                        <div class="expandable-wrapper">
+                            <div class="expandable-content">
+                                <h4>Real-World Scenario</h4>
+                                <p>A financial services client needed to understand the regulatory and technical implications of adopting LLMs for customer service. Zedot delivered a 3-week research sprint covering EU AI Act exposure, NDPR data handling requirements, RAG architecture options, and a vendor comparison — giving their board a decision-ready brief.</p>
+                                <a href="#contact" class="btn-pill-cyan nav-trigger mt-16">Talk to us about this</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PORTFOLIO VIEW ================= -->
+        <section class="spa-view" id="portfolio">
+            <div class="container section-padding fade-in-up">
+                <div class="page-header">
+                    <h1>Portfolio</h1>
+                    <div class="page-visual" id="portfolioVisual"></div>
+                </div>
+                <h2 style="color: var(--text-secondary); margin-bottom: 40px; font-weight: 400;">Solutions delivered. Trust earned.</h2>
+
+                <div class="industry-segments">
+                    <div class="industry-segment">
+                        <div class="industry-header">🏦 Fintech & Financial Services</div>
+                        <div class="portfolio-canvas segment-canvas">
+                            <div class="portfolio-item" style="top: 20%; left: 30%; animation: float 6s infinite ease-in-out;">
+                                <span class="logo-ph">FinEdge</span>
+                                <div class="hover-details">
+                                    <h3>FinEdge</h3>
+                                    <p class="sector-tag">Fintech</p>
+                                    <p class="services-tag">Cybersecurity, Mobile App</p>
+                                    <p><strong>Outcome:</strong> Zero-trust architecture securing $50M daily volume.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="industry-segment">
+                        <div class="industry-header">🏥 Health & Life Sciences</div>
+                        <div class="portfolio-canvas segment-canvas">
+                            <div class="portfolio-item" style="top: 40%; left: 50%; animation: float 8s infinite ease-in-out reverse;">
+                                <span class="logo-ph">HealthSync</span>
+                                <div class="hover-details">
+                                    <h3>HealthSync</h3>
+                                    <p class="sector-tag">Healthtech</p>
+                                    <p class="services-tag">Data Engineering, AI</p>
+                                    <p><strong>Outcome:</strong> HIPAA-compliant predictive patient analytics.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="industry-segment">
+                        <div class="industry-header">🚚 Logistics & Supply Chain</div>
+                        <div class="portfolio-canvas segment-canvas">
+                            <div class="portfolio-item" style="top: 30%; left: 20%; animation: float 7s infinite ease-in-out;">
+                                <span class="logo-ph">AcmeCorp</span>
+                                <div class="hover-details">
+                                    <h3>AcmeCorp</h3>
+                                    <p class="sector-tag">Logistics</p>
+                                    <p class="services-tag">Cloud Infrastructure, API Dev</p>
+                                    <p><strong>Outcome:</strong> 40% reduction in routing latency globally.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="industry-segment">
+                        <div class="industry-header">⚡ Energy & Utilities</div>
+                        <div class="portfolio-canvas segment-canvas">
+                            <div class="portfolio-item" style="top: 30%; left: 60%; animation: float 9s infinite ease-in-out reverse;">
+                                <span class="logo-ph">EcoGrid</span>
+                                <div class="hover-details">
+                                    <h3>EcoGrid</h3>
+                                    <p class="sector-tag">Energy</p>
+                                    <p class="services-tag">IoT, Automation</p>
+                                    <p><strong>Outcome:</strong> Real-time edge compute across 5,000 nodes.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <!-- Continuous Ticker -->
+                <div class="logo-ticker-container">
+                    <h3 class="ticker-title">Companies We've Collaborated With</h3>
+                    <div class="logo-ticker">
+                        <div class="logo-track">
+                            <span class="ticker-item">FinEdge</span>
+                            <span class="ticker-item">HealthSync</span>
+                            <span class="ticker-item">AcmeCorp</span>
+                            <span class="ticker-item">EcoGrid</span>
+                            <span class="ticker-item">RetailPro</span>
+                            <span class="ticker-item">GovTech Africa</span>
+                            <span class="ticker-item">TelcoX</span>
+                            <!-- Duplicate for seamless scroll -->
+                            <span class="ticker-item">FinEdge</span>
+                            <span class="ticker-item">HealthSync</span>
+                            <span class="ticker-item">AcmeCorp</span>
+                            <span class="ticker-item">EcoGrid</span>
+                            <span class="ticker-item">RetailPro</span>
+                            <span class="ticker-item">GovTech Africa</span>
+                            <span class="ticker-item">TelcoX</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= TEAM VIEW ================= -->
+        <section class="spa-view" id="team">
+            <div class="container section-padding fade-in-up">
+                <div class="page-header">
+                    <h1>Who We Are</h1>
+                    <div class="page-visual" id="teamVisual"></div>
+                </div>
+                <p style="max-width: 800px; color: var(--text-secondary); margin-bottom: 60px; font-size: 1.1rem; line-height: 1.8;">
+                    "We are six specialists — and a growing squad — who came together around one belief: that African-built technology can compete and lead on any global stage. Zedot is what that belief looks like in practice."
+                </p>
+
+                <div class="team-grid">
+                    <div class="team-card glass-card">
+                        <div class="team-avatar" style="background: url('https://via.placeholder.com/400x400/1a1f2e/40e0d0?text=Emeka+Osei') center/cover;"></div>
+                        <h3>Emeka Osei</h3>
+                        <div class="role-chip">Agile Product & Design Head</div>
+                        <p>Caramel skin, glasses, curly 4C afro, normal-length beard.</p>
+                    </div>
+                    <div class="team-card glass-card">
+                        <div class="team-avatar" style="background: url('https://via.placeholder.com/400x400/1a1f2e/40e0d0?text=Biodun+Afolabi') center/cover;"></div>
+                        <h3>Biodun Afolabi</h3>
+                        <div class="role-chip">DevOps Lead</div>
+                        <p>Chubby dark-skinned Yoruba man, low fade, full beard.</p>
+                    </div>
+                    <div class="team-card glass-card">
+                        <div class="team-avatar" style="background: url('https://via.placeholder.com/400x400/1a1f2e/40e0d0?text=Chukwudi+Eze') center/cover;"></div>
+                        <h3>Chukwudi Eze</h3>
+                        <div class="role-chip">AI Engineer & Automation Expert</div>
+                        <p>Slender average-height Igbo man, low fade, beard.</p>
+                    </div>
+                    <div class="team-card glass-card">
+                        <div class="team-avatar" style="background: url('https://via.placeholder.com/400x400/1a1f2e/40e0d0?text=Seun+Adeyemi') center/cover;"></div>
+                        <h3>Seun Adeyemi</h3>
+                        <div class="role-chip">Development Lead</div>
+                        <p>Slender average-height Yoruba man, low fade, beard.</p>
+                    </div>
+                    <div class="team-card glass-card">
+                        <div class="team-avatar" style="background: url('https://via.placeholder.com/400x400/1a1f2e/40e0d0?text=Tunde+Bello') center/cover;"></div>
+                        <h3>Tunde Bello</h3>
+                        <div class="role-chip">QA Lead</div>
+                        <p>Slender tall Yoruba man, low fade, no beard.</p>
+                    </div>
+                    <div class="team-card glass-card">
+                        <div class="team-avatar" style="background: url('https://via.placeholder.com/400x400/1a1f2e/40e0d0?text=Adesuwa+Omoruyi') center/cover;"></div>
+                        <h3>Adesuwa Omoruyi</h3>
+                        <div class="role-chip">Research & Data Expert</div>
+                        <p>Slender average-height Edo woman, curly afro in ponytail.</p>
+                    </div>
+                </div>
+
+                <div class="fade-in-up" style="margin-top: 100px;">
+                    <h2>Extended Squad</h2>
+                    <div class="squad-grid">
+                        <div class="squad-card"><div class="squad-details"><h4>Frontend Engineer</h4></div></div>
+                        <div class="squad-card"><div class="squad-details"><h4>Backend Engineer</h4></div></div>
+                        <div class="squad-card"><div class="squad-details"><h4>Cloud Architect</h4></div></div>
+                        <div class="squad-card"><div class="squad-details"><h4>Cybersecurity Analyst</h4></div></div>
+                        <div class="squad-card"><div class="squad-details"><h4>UX Researcher</h4></div></div>
+                        <div class="squad-card"><div class="squad-details"><h4>Data Scientist</h4></div></div>
+                        <div class="squad-card"><div class="squad-details"><h4>Technical Writer</h4></div></div>
+                        <div class="squad-card"><div class="squad-details"><h4>Project Coordinator</h4></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= RESEARCH VIEW ================= -->
+        <section class="spa-view" id="research">
+            <div class="container section-padding fade-in-up">
+                <h1>Where Curiosity Meets Capability.</h1>
+                <p style="color: var(--text-secondary); max-width: 600px; margin-top: 16px;">Zedot's research practice translates what's emerging into what's applicable. We scan the horizon — so you can stay ahead of it.</p>
+                
+                <div class="research-filters">
+                    <input type="text" id="researchSearch" class="search-bar" placeholder="Search research topics...">
+                    <div class="filter-chips">
+                        <button class="chip active" data-filter="All">All</button>
+                        <button class="chip" data-filter="AI">AI</button>
+                        <button class="chip" data-filter="Cloud">Cloud</button>
+                        <button class="chip" data-filter="Security">Security</button>
+                        <button class="chip" data-filter="Data">Data</button>
+                        <button class="chip" data-filter="IoT">IoT</button>
+                        <button class="chip" data-filter="Compliance">Compliance</button>
+                        <button class="chip" data-filter="Fintech">Fintech</button>
+                        <button class="chip" data-filter="Culture">Culture</button>
+                    </div>
+                </div>
+
+                <div class="research-grid" id="researchGrid">
+                    <!-- Global Tech -->
+                    <div class="glass-card research-card" data-category="AI">
+                        <h3 class="res-title">Agentic AI and autonomous software development pipelines</h3>
+                        <p>(Nature, MIT Tech Review)</p><span class="res-tag">AI</span><a href="#">Explore Further</a>
+                    </div>
+                    <div class="glass-card research-card" data-category="Security">
+                        <h3 class="res-title">Zero-trust architecture as enterprise security default</h3>
+                        <p>(NIST SP 800-207, Gartner 2024)</p><span class="res-tag">Security</span><a href="#">Explore Further</a>
+                    </div>
+                    <div class="glass-card research-card" data-category="AI Data">
+                        <h3 class="res-title">Vector databases reshaping enterprise AI retrieval</h3>
+                        <p>(Pinecone, Weaviate research)</p><span class="res-tag">AI / Data</span><a href="#">Explore Further</a>
+                    </div>
+                    <div class="glass-card research-card" data-category="Cloud">
+                        <h3 class="res-title">FinOps and cloud cost governance at scale</h3>
+                        <p>(FinOps Foundation 2024 State of FinOps)</p><span class="res-tag">Cloud</span><a href="#">Explore Further</a>
+                    </div>
+                    <div class="glass-card research-card" data-category="IoT Cloud">
+                        <h3 class="res-title">Edge computing and real-time IoT data pipelines</h3>
+                        <p>(IEEE, Linux Foundation)</p><span class="res-tag">IoT / Cloud</span><a href="#">Explore Further</a>
+                    </div>
+                    <div class="glass-card research-card" data-category="Compliance AI">
+                        <h3 class="res-title">EU AI Act and NDPR compliance for African tech businesses</h3>
+                        <p>(NITDA, EUR-Lex)</p><span class="res-tag">Compliance / AI</span><a href="#">Explore Further</a>
+                    </div>
+                    <div class="glass-card research-card" data-category="AI">
+                        <h3 class="res-title">MLOps maturity models in emerging markets</h3>
+                        <p>(Google MLOps whitepaper)</p><span class="res-tag">AI</span><a href="#">Explore Further</a>
+                    </div>
+                    <div class="glass-card research-card" data-category="AI Data">
+                        <h3 class="res-title">RAG in production environments</h3>
+                        <p>(LangChain, Anthropic research)</p><span class="res-tag">AI / Data</span><a href="#">Explore Further</a>
+                    </div>
+                    <div class="glass-card research-card" data-category="Security Cloud AI">
+                        <h3 class="res-title">DevSecOps and AI-assisted code review convergence</h3>
+                        <p>(GitHub Octoverse 2024)</p><span class="res-tag">Security / Cloud</span><a href="#">Explore Further</a>
+                    </div>
+                    <div class="glass-card research-card" data-category="AI Data">
+                        <h3 class="res-title">Synthetic data generation for privacy-safe ML training</h3>
+                        <p>(Gartner, IAPP)</p><span class="res-tag">AI / Data</span><a href="#">Explore Further</a>
+                    </div>
+                    <div class="glass-card research-card" data-category="Security">
+                        <h3 class="res-title">Quantum-resistant cryptography: preparing enterprise systems now</h3>
+                        <p>(NIST PQC standards)</p><span class="res-tag">Security</span><a href="#">Explore Further</a>
+                    </div>
+                    <div class="glass-card research-card" data-category="AI Cloud">
+                        <h3 class="res-title">AI agents in enterprise workflow automation</h3>
+                        <p>(Salesforce, ServiceNow research)</p><span class="res-tag">AI / Cloud</span><a href="#">Explore Further</a>
+                    </div>
+
+                    <!-- African Fintech Focus -->
+                    <div class="glass-card research-card" data-category="Fintech">
+                        <h3 class="res-title">The Nigerian fintech ecosystem: $800M+ in funding and the infrastructure gap it reveals</h3>
+                        <p>(Techpoint Africa, Disrupt Africa 2024)</p><span class="res-tag">Fintech</span><a href="#">Explore Further</a>
+                    </div>
+                    <div class="glass-card research-card" data-category="Fintech Compliance">
+                        <h3 class="res-title">Open banking in Nigeria: CBN framework implications for API-first development</h3>
+                        <p>(CBN Policy, PwC Nigeria)</p><span class="res-tag">Fintech / Compliance</span><a href="#">Explore Further</a>
+                    </div>
+                    <div class="glass-card research-card" data-category="Culture">
+                        <h3 class="res-title">Benefits of an innovative engineering culture in African startups</h3>
+                        <p>(McKinsey Africa, Ventures Platform)</p><span class="res-tag">Culture</span><a href="#">Explore Further</a>
+                    </div>
+                    <div class="glass-card research-card" data-category="Culture">
+                        <h3 class="res-title">Tech talent grooming in Nigeria: why internal upskilling outperforms external hiring</h3>
+                        <p>(Andela research, Co-Creation Hub)</p><span class="res-tag">Culture</span><a href="#">Explore Further</a>
+                    </div>
+                    <div class="glass-card research-card" data-category="Fintech">
+                        <h3 class="res-title">Mobile-first fintech UX in low-bandwidth environments: design patterns that convert</h3>
+                        <p>(GSMA Intelligence, Flutterwave design blog)</p><span class="res-tag">Fintech</span><a href="#">Explore Further</a>
+                    </div>
+                    <div class="glass-card research-card" data-category="Fintech Data">
+                        <h3 class="res-title">Blockchain for cross-border settlements in West Africa: promise vs. practical friction</h3>
+                        <p>(AfDB, Ripple Africa reports)</p><span class="res-tag">Fintech / Data</span><a href="#">Explore Further</a>
+                    </div>
+                    <div class="glass-card research-card" data-category="AI Fintech Compliance">
+                        <h3 class="res-title">AI credit scoring for the unbanked: ethical considerations and Nigerian regulatory context</h3>
+                        <p>(EFInA, CGAP)</p><span class="res-tag">AI / Fintech</span><a href="#">Explore Further</a>
+                    </div>
+                    <div class="glass-card research-card" data-category="Security Fintech">
+                        <h3 class="res-title">Cybersecurity threat landscape in Nigerian financial institutions 2024</h3>
+                        <p>(NITDA Threat Report, PwC Nigeria)</p><span class="res-tag">Security / Fintech</span><a href="#">Explore Further</a>
+                    </div>
+                </div>
+
+                <div class="newsletter-block glass-card fade-in-up mt-16">
+                    <h3>Stay ahead of what's next.</h3>
+                    <form id="newsletterForm" class="inline-form" style="max-width: 500px; margin-top: 16px;">
+                        <input type="email" placeholder="Email Address" required>
+                        <button type="submit" class="btn-primary">Subscribe</button>
+                    </form>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= CONTACT VIEW ================= -->
+        <section class="spa-view" id="contact">
+            <div class="container section-padding contact-wrapper fade-in-up">
+                
+                <div class="contact-left">
+                    <h1>Let's Build Something<br>That Works</h1>
+                    <p class="contact-sub">We're ready to bring your vision to life. Reach out and our team will get back to you immediately.</p>
+                    
+                    <div class="contact-details">
+                        <div>support@zedot.tech</div>
+                        <div>Lagos, Nigeria</div>
+                    </div>
+                    <p style="color: var(--text-secondary); margin-top: 24px; font-size: 0.9rem;">
+                        * We typically respond within 2 hours during business hours.
+                    </p>
+                </div>
+
+                <div class="contact-right glass-card">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" id="name" required placeholder="Full Name">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" required placeholder="Email Address">
+                        </div>
+                        <div class="form-group">
+                            <select id="referral" required>
+                                <option value="" disabled selected>How did you hear about us?</option>
+                                <option value="social">Social Media</option>
+                                <option value="referral">Referral</option>
+                                <option value="google">Google Search</option>
+                                <option value="event">Event</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" required placeholder="How can we help you?" rows="4"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary" style="width: 100%;">Send It</button>
+                    </form>
+                </div>
+                
+                <div class="success-toast" id="successToast">Message received. We'll be in touch shortly.</div>
+            </div>
+        </section>
+
+        <!-- Global Centered Footer -->
+        <footer class="master-footer">
+            <div class="container">
+                <a href="#home" class="logo-link nav-trigger" style="display:inline-block; margin-bottom: 8px;">
+                    <div class="logo" style="justify-content: center;">ZEDOT<span class="logo-dot"></span></div>
+                </a>
+                <p class="copyright">&copy; 2026 Zedot Technologies. All rights reserved.</p>
+                
+                <div class="certifications-grid">
+                    <div class="cert-group">
+                        <div class="iso-badge">ISO 9001:2015</div>
+                        <div class="iso-badge">ISO 20000-1:2018</div>
+                    </div>
+                    <div class="cert-group">
+                        <div class="iso-badge">ISO 27001:2022</div>
+                        <div class="iso-badge">SOC 2 Type II</div>
+                        <div class="iso-badge">OWASP Verified</div>
+                    </div>
+                    <div class="cert-group">
+                        <div class="iso-badge">PSM I</div>
+                        <div class="iso-badge">SAFe 6.0</div>
+                        <div class="iso-badge">PMI-ACP</div>
+                        <div class="iso-badge">DORA Elite</div>
+                    </div>
+                    <div class="cert-group">
+                        <div class="iso-badge">CKA</div>
+                        <div class="iso-badge">AWS DevOps Pro</div>
+                        <div class="iso-badge">GCP DevOps Engineer</div>
+                        <div class="iso-badge">Terraform Associate</div>
+                    </div>
+                    <div class="cert-group">
+                        <div class="iso-badge">CEH</div>
+                        <div class="iso-badge">CISSP</div>
+                        <div class="iso-badge">CompTIA Security+</div>
+                        <div class="iso-badge">CISM</div>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="mailto:support@zedot.tech">support@zedot.tech</a>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Persistent Dotty Chatbot UI -->
+    <div class="dotty-launcher" id="dottyLauncher">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#1a1f2e" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+    </div>
+    
+    <div class="dotty-panel" id="dottyPanel">
+        <div class="dotty-header">
+            <h4>Dotty</h4>
+            <button class="dotty-close" id="dottyClose">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div class="dotty-messages" id="dottyMessages">
+            <div class="chat-msg msg-bot">Hey, I'm Dotty. Your guide to everything Zedot — ask me anything.</div>
+        </div>
+        <form class="dotty-input-area" id="dottyForm">
+            <input type="text" id="dottyInput" placeholder="Ask Dotty anything..." required autocomplete="off">
+            <button type="submit">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+        </form>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
